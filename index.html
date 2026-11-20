@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070914">
+  <title>NEON VELOCITY — 3D Highway Rush</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="boot" class="boot-screen">
+    <div class="boot-logo">NV<span>///</span></div>
+    <div class="boot-line"><i id="bootProgress"></i></div>
+    <p id="bootMessage">INITIALIZING NEON VELOCITY</p>
+  </div>
+
+  <div class="game-root">
+    <canvas id="gameCanvas"></canvas>
+    <div class="vignette"></div>
+    <div class="scanlines"></div>
+
+    <header class="topbar">
+      <a class="wordmark" href="#"><span class="wordmark-icon">N</span><span>NEON<br><b>VELOCITY</b></span></a>
+      <div class="season-label"><span class="pulse"></span> NIGHT DRIVE <i>•</i> SECTOR 07</div>
+      <button class="icon-button" id="audioButton" title="Toggle audio">♫ <span id="audioLabel">AUDIO ON</span></button>
+    </header>
+
+    <section class="hud" id="hud">
+      <div class="hud-left">
+        <div class="metric-card speed-card">
+          <span class="metric-label">VELOCITY</span>
+          <div class="speed-line"><strong id="speedValue">000</strong><small>KM/H</small></div>
+          <div class="speed-track"><i id="speedBar"></i></div>
+        </div>
+        <div class="metric-card score-card">
+          <span class="metric-label">DISTANCE</span>
+          <strong><span id="distanceValue">0.00</span><small> KM</small></strong>
+          <span class="sub-metric">BEST <b id="bestValue">0.00 KM</b></span>
+        </div>
+      </div>
+      <div class="hud-right">
+        <div class="metric-card score-card">
+          <span class="metric-label">SCORE</span>
+          <strong id="scoreValue">000000</strong>
+          <span class="sub-metric">CREDITS <b id="coinValue">000</b></span>
+        </div>
+        <div class="nitro-card">
+          <div class="nitro-head"><span class="metric-label">NITRO SYSTEM</span><b id="nitroPercent">100%</b></div>
+          <div class="nitro-track"><i id="nitroBar"></i></div>
+          <span class="nitro-hint">HOLD SHIFT / NITRO</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="mission-chip" id="missionChip"><span>◆</span> MISSION: SURVIVE THE NIGHT <b id="missionProgress">0 / 1.5
+        KM</b></div>
+
+    <section class="overlay-screen active" id="menuScreen">
+      <div class="menu-panel">
+        <div class="eyebrow"><span class="eyebrow-line"></span> THE CITY NEVER SLEEPS</div>
+        <h1>NEON<br><em>VELOCITY</em></h1>
+        <p class="menu-copy">Own the highway. Dodge the traffic.<br>Push your limits after dark.</p>
+        <div class="menu-stats">
+          <div><b>3D</b><span>WORLD</span></div>
+          <div><b>∞</b><span>HIGHWAY</span></div>
+          <div><b>01</b><span>DRIVER</span></div>
+        </div>
+        <button class="main-button" id="startButton"><span>START ENGINE</span><b>↗</b></button>
+        <div class="menu-foot">W A S D / ARROW KEYS <span>•</span> SHIFT FOR NITRO</div>
+      </div>
+      <div class="menu-side-note">NIGHT CITY // EST. 2088</div>
+    </section>
+
+    <section class="overlay-screen" id="pauseScreen">
+      <div class="compact-panel">
+        <div class="eyebrow">DRIVE CONTROL</div>
+        <h2>PAUSED<span>.</span></h2>
+        <p>Your ride is on standby.</p>
+        <button class="main-button" id="resumeButton"><span>RESUME DRIVE</span><b>▶</b></button>
+        <button class="text-button" id="pauseRestart">RESTART RUN</button>
+      </div>
+    </section>
+
+    <section class="overlay-screen" id="gameOverScreen">
+      <div class="compact-panel">
+        <div class="eyebrow">RUN TERMINATED</div>
+        <h2>WIPEOUT<span>.</span></h2>
+        <p>Every run makes you faster.</p>
+        <div class="result-grid">
+          <div><small>FINAL SCORE</small><b id="finalScore">0</b></div>
+          <div><small>DISTANCE</small><b id="finalDistance">0.00 KM</b></div>
+          <div><small>CREDITS</small><b id="finalCoins">0</b></div>
+        </div>
+        <button class="main-button" id="retryButton"><span>RACE AGAIN</span><b>↻</b></button>
+        <button class="text-button" id="menuButton">BACK TO MAIN MENU</button>
+      </div>
+    </section>
+
+    <div class="toast" id="toast">NITRO BOOST</div>
+    <div class="damage-flash" id="damageFlash"></div>
+
+    <footer class="bottom-hud">
+      <div class="control-legend">
+        <span><kbd>A</kbd><kbd>D</kbd> STEER</span>
+        <span><kbd>W</kbd><kbd>↑</kbd> ACCELERATE</span>
+        <span><kbd>S</kbd><kbd>↓</kbd> BRAKE</span>
+        <span><kbd>SHIFT</kbd> NITRO</span>
+        <span><kbd>P</kbd> PAUSE</span>
+      </div>
+      <div class="build-label">NV ENGINE <b>1.0.8</b> <i>●</i> WEBGL</div>
+    </footer>
+
+    <div class="mobile-controls" id="mobileControls">
+      <button data-control="left" aria-label="Steer left">◀</button>
+      <button data-control="right" aria-label="Steer right">▶</button>
+      <button data-control="nitro" aria-label="Nitro boost">N₂</button>
+    </div>
+  </div>
+
+  <script type="module" src="game.js"></script>
+</body>
+
+</html>
